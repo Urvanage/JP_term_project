@@ -21,9 +21,10 @@ public class Player extends obj {
 		getPlayerImage();
 	}
 	public void setDefaultValues() {
-		x = 100;
-		y=100;
+		x = 150;
+		y=250;
 		speed = 4;
+		direction = "up";
 	}
 	public void getPlayerImage() {
 		try{
@@ -33,17 +34,39 @@ public class Player extends obj {
 		}
 	}
 	public void update() {
-		if(keyH.upPressed==true) {
-			y -= speed;
-		}
-		else if(keyH.downPressed==true) {
-			y += speed;
-		}
-		else if (keyH.leftPressed==true) {
-			x -= speed;
-		}
-		else if (keyH.rightPressed==true) {
-			x += speed;
+		if(keyH.upPressed == true || keyH.downPressed ==true || keyH.leftPressed == true || keyH.rightPressed == true) {
+			if(keyH.upPressed==true) {
+				direction = "up";
+			}
+			else if(keyH.downPressed==true) {
+				direction = "down";
+			}
+			else if (keyH.leftPressed==true) {
+				direction = "left";
+			}
+			else if (keyH.rightPressed==true) {
+				direction = "right";
+			}
+		
+			collisionOn = false;
+			gP.cDetector.checkTile(this);
+		
+			if(collisionOn==false) {
+				switch(direction){
+				case "up":
+					y -= speed;
+					break;
+				case "down":
+					y += speed;
+					break;
+				case "left":
+					x -= speed;
+					break;
+				case "right":
+					x += speed;
+					break;
+				}	
+			}
 		}
 	}
 	public void draw(Graphics2D g2) {

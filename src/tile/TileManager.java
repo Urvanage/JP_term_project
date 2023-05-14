@@ -12,7 +12,7 @@ import BALL.GamePanel;
 
 public class TileManager {
 	GamePanel gp;
-	Tile[][] tile;
+	public Tile[][] tile;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -24,7 +24,7 @@ public class TileManager {
 		try { //tilemanger로 맵을 만듭니다. 
 			  //map 요소는 res tiles a~q 이고 
 			  //메모장 형식으로 넣어주면 대충은 일단 완성!
-			InputStream is= getClass().getResourceAsStream("/map/map07.txt");
+			InputStream is= getClass().getResourceAsStream("/map/map06.txt");
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			
 			String frag;
@@ -33,11 +33,16 @@ public class TileManager {
 				for(int i=0;i<frag.length();i++) {
 					tile[cnt][i] = new Tile();
 					tile[cnt][i].image = ImageIO.read(getClass().getResource("/tiles/"+frag.charAt(i)+".png"));
+					if(frag.charAt(i)=='q' || frag.charAt(i)=='r') {
+						tile[cnt][i].collision = false;
+					} else {
+						tile[cnt][i].collision = true;
+					}
 				}
 				cnt++;
 			}
 			
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO: handle exception
 		}
 	}
