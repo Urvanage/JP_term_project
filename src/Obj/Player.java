@@ -42,13 +42,13 @@ public class Player extends obj {
 		else if (keyH.leftPressed==true) {
 			x -= speed;
 		}
-		else if (keyH.rightPressed=true) {
+		else if (keyH.rightPressed==true) {
 			x += speed;
 		}
 	}
 	public void draw(Graphics2D g2) {
 		BufferedImage im = image;
-		g2.drawImage(im, x, y, gP.tileSize, gP.tileSize, null);
+		g2.drawImage(im, x, y, gP.tileSize*2/3, gP.tileSize*2/3, null);
 		
 	}
 }
