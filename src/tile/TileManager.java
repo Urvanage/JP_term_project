@@ -24,7 +24,7 @@ public class TileManager {
 		try { //tilemanger로 맵을 만듭니다. 
 			  //map 요소는 res tiles a~q 이고 
 			  //메모장 형식으로 넣어주면 대충은 일단 완성!
-			InputStream is= getClass().getResourceAsStream("/map/map06.txt");
+			InputStream is= getClass().getResourceAsStream("/map/map03.txt");
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			
 			String frag;

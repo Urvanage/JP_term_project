@@ -21,9 +21,9 @@ public class Player extends obj {
 		getPlayerImage();
 	}
 	public void setDefaultValues() {
-		x = 150;
+		x = 200;
 		y=250;
-		speed = 4;
+		speed = 3;
 		direction = "up";
 	}
 	public void getPlayerImage() {
