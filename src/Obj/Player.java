@@ -13,17 +13,21 @@ import BALL.KeyHandler;
 public class Player extends obj {
 	GamePanel gP;
 	KeyHandler keyH;
+	private int startx;
+	private int starty;
 	
-	public Player (GamePanel gP, KeyHandler keyH) {
+	public Player (GamePanel gP, KeyHandler keyH,int startx,int starty) {
 		this.gP = gP;
 		this.keyH = keyH;
+		this.startx=startx;
+		this.starty= starty;
 		setDefaultValues();
 		getPlayerImage();
 	}
-	public void setDefaultValues() {
-		x = 200;
-		y=250;
-		speed = 3;
+	public void setDefaultValues() { //시작지점설정
+		x = startx;
+		y = starty;
+		speed = 10;
 		direction = "up";
 	}
 	public void getPlayerImage() {
@@ -32,6 +36,12 @@ public class Player extends obj {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void resetpos(int startx, int starty) {
+		this.startx=startx;
+		this.starty=starty;
+		setDefaultValues();
 	}
 	public void update() {
 		if(keyH.upPressed == true || keyH.downPressed ==true || keyH.leftPressed == true || keyH.rightPressed == true) {

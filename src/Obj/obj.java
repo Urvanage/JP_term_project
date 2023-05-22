@@ -7,5 +7,6 @@ public class obj {
 	public int speed;
 	public String direction;
 	public boolean collisionOn;
+	
 	public BufferedImage image;
 }
