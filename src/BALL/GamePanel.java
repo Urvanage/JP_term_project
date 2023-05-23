@@ -1,6 +1,6 @@
 package BALL;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,7 +8,14 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.nio.channels.ClosedByInterruptException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -19,8 +26,6 @@ import javax.swing.JTextField;
 
 import Obj.Enemy;
 import Obj.Player;
-import Obj.obj;
-import tile.Tile;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -41,9 +46,11 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int leaderboard = 2;
 	public final int playState = 3;
 	public final int endState = 4;
+	public int ClientDone;
 	
 	public JButton startButton,leaderboardButton,enlistButton;
 	public JTextField nameField;
+	public String name;
 	
 	int FPS = 60;
 	TileManager tileM = new TileManager(this);
@@ -69,8 +76,8 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 		gameState= titleState;
-		
-		deathcount = 0;
+		ClientDone= 0;
+		deathcount = -2;
 		
 		startButton = new JButton("Start");
 		leaderboardButton = new JButton("Leaderboard");
@@ -81,8 +88,8 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		ActionListener enlistListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tmp = nameField.getText();
-				JOptionPane.showMessageDialog(null, tmp+" enlisted!");
+				name = nameField.getText();
+				JOptionPane.showMessageDialog(null, name+" enlisted!");
 				nameField.setVisible(false);
 				enlistButton.setVisible(false);
 				nameField.setText("");
@@ -247,6 +254,7 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 
 		if(gameState==titleState) {
+			ClientDone = 0;
 			startButton.setVisible(true);
 			leaderboardButton.setVisible(true);
 			Graphics2D g2= (Graphics2D)g;
@@ -255,6 +263,15 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		else if(gameState==leaderboard) {
 			startButton.setVisible(true);
+			Graphics2D g2= (Graphics2D)g;
+			/*if(ClientDone==0) {*/ Client client = new Client(deathcount, name, this,g2);
+			 client.runClient();
+			 ClientDone = 1;
+			//}
+			//gameState=6;
+		}
+		else if(gameState==6) {
+			
 		}
 		else if(gameState==playState){
 			Graphics2D g2 = (Graphics2D)g;
@@ -290,9 +307,4 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.drawImage(im,350,300,700,200,null);
 		}
 	}
-	
-	public void openClient() {
-		
-	}
-
 }
