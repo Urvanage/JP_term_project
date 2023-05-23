@@ -50,12 +50,16 @@ public class TileManager {
 					for(int i=0;i<frag.length();i++) {
 						tile[cnt][i] = new Tile();
 						tile[cnt][i].endgame=false;
+						tile[cnt][i].safety=false;
 						tile[cnt][i].image = ImageIO.read(getClass().getResource("/tiles/"+frag.charAt(i)+".png"));
 						if(frag.charAt(i)=='z') {
 							tile[cnt][i].endgame = true;
 							tile[cnt][i].collision = false;
 						}
 						else if(frag.charAt(i)=='q' || frag.charAt(i)=='r') {
+							if(frag.charAt(i)=='r') {
+								tile[cnt][i].safety =true;
+							}
 							tile[cnt][i].collision = false;
 						}else {
 							tile[cnt][i].collision = true;

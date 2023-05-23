@@ -30,6 +30,13 @@ public class CollisionDetector {
 		int objtopROW = objtopY/gp.tileSize;
 		int objbottomROW = objbottomY/gp.tileSize;
 		
+		if(gp.tileM.tile[(objtopROW+objbottomROW)/2][(objleftCOL+objrightCOL)/2].safety==true || gp.tileM.tile[(objtopROW+objbottomROW)/2][(objleftCOL+objrightCOL)/2].safety==true) {
+			gp.gpsafety=true;
+		}
+		else {
+			gp.gpsafety=false;
+		}
+		
 		switch(OBJ.direction){
 		case "up":
 			objtopROW = (objtopY-OBJ.speed)/gp.tileSize;

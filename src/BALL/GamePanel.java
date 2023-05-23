@@ -72,6 +72,8 @@ public class GamePanel extends JPanel implements Runnable {
 	Enemy enemy7 = new Enemy(this,"java",21,0);
 	Enemy enemy8 = new Enemy(this,"py",0,15);
 	
+	public boolean gpsafety ;
+	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth,screenHeight));
 		this.setDoubleBuffered(true);
@@ -137,8 +139,16 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread.start();
 	}
 	
+	public boolean playerissafe() {
+		if(gpsafety) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void resetplayerposition() {
 		int level = tileM.getcurrentnum();
+		gpsafety=true;
 		switch(level) {
 			case 1:
 				player.resetpos(48*4, 24*15);
@@ -169,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
 				break;
 			case 10:
 				gameState = endState;
-				deathcount =0;
+				//deathcount =0;
 				tileM.initcurrentnum();
 				break;
 		}
@@ -188,11 +198,6 @@ public class GamePanel extends JPanel implements Runnable {
 			// draw the screen with updated thing
 			repaint();
 			
-	         if(EnemyCollision(player,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6,enemy7,enemy8)==false) {
-	        	 resetplayerposition();
-	        	 deathcount++;
-	         }
-			
 			try {
 				
 				double remainingTime = nextDrawTime - System.nanoTime();
@@ -206,6 +211,13 @@ public class GamePanel extends JPanel implements Runnable {
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if(EnemyCollision(player,enemy1,enemy2,enemy3,enemy4,enemy5,enemy6,enemy7,enemy8)==false) {
+	        	 if(playerissafe()) {
+	        		 continue;
+	        	 }
+	        	 resetplayerposition();
+	        	 deathcount++;
 			}
 		}
 	}
@@ -268,18 +280,21 @@ public class GamePanel extends JPanel implements Runnable {
 			int cnt = 0;
 			startButton.setVisible(true);
 			Graphics2D g2= (Graphics2D)g;
+    		g2.setFont(new Font("궁서",Font.BOLD,35));
+			g2.drawString("Leaderboard", 360, 120);
 			if(ClientDone==0) { Client client = new Client(deathcount, name, this,g2);
 			 client.runClient();
 			 ClientDone = 1;
 			}
 			for(int i=0;i<lb.size();i++) {
-        		g2.setFont(new Font("궁서",Font.BOLD,20));
-    			g2.drawString(lb.get(i), 360, 180+cnt);
+        		g2.setFont(new Font("궁서",Font.BOLD,35));
+    			g2.drawString((i+1)+"  :  "+lb.get(i), 360, 180+cnt);
     			cnt += 40;
 			}
 		}
 		else if(gameState==playState){
 			ClientDone = 0;
+			if(deathcount<0) deathcount = 0;
 			Graphics2D g2 = (Graphics2D)g;
 			tileM.draw(g2);
 			player.draw(g2);
@@ -303,7 +318,7 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.setFont(new Font("궁서",Font.BOLD,28));
 			g2.drawString("Congratulations!                    You made it!", 360, 160);
 			// 리더보드에 추가하는 코드
-			
+			name=nameField.getText();
 			
 			BufferedImage im = null;
 			try {
