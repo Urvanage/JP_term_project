@@ -16,6 +16,8 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.channels.ClosedByInterruptException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -51,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public JButton startButton,leaderboardButton,enlistButton;
 	public JTextField nameField;
 	public String name;
+	public List<String> lb;
 	
 	int FPS = 60;
 	TileManager tileM = new TileManager(this);
@@ -78,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
 		gameState= titleState;
 		ClientDone= 0;
 		deathcount = -2;
+		lb = new ArrayList<String>();
 		
 		startButton = new JButton("Start");
 		leaderboardButton = new JButton("Leaderboard");
@@ -252,7 +256,6 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		if(gameState==titleState) {
 			ClientDone = 0;
 			startButton.setVisible(true);
@@ -262,18 +265,21 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.drawString("World's modest difficult block avoidance", 360, 180);
 		}
 		else if(gameState==leaderboard) {
+			int cnt = 0;
 			startButton.setVisible(true);
 			Graphics2D g2= (Graphics2D)g;
-			/*if(ClientDone==0) {*/ Client client = new Client(deathcount, name, this,g2);
+			if(ClientDone==0) { Client client = new Client(deathcount, name, this,g2);
 			 client.runClient();
 			 ClientDone = 1;
-			//}
-			//gameState=6;
-		}
-		else if(gameState==6) {
-			
+			}
+			for(int i=0;i<lb.size();i++) {
+        		g2.setFont(new Font("궁서",Font.BOLD,20));
+    			g2.drawString(lb.get(i), 360, 180+cnt);
+    			cnt += 40;
+			}
 		}
 		else if(gameState==playState){
+			ClientDone = 0;
 			Graphics2D g2 = (Graphics2D)g;
 			tileM.draw(g2);
 			player.draw(g2);
@@ -290,6 +296,7 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.dispose();
 		}
 		else if(gameState==endState) {
+			ClientDone = 0;
 			Graphics2D g2= (Graphics2D)g;
 			nameField.setVisible(true);
 			enlistButton.setVisible(true);

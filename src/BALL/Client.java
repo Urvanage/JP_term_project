@@ -43,7 +43,7 @@ public class Client {
             	List<Integer> num = new ArrayList<>();
             	List<String> str = new ArrayList<>();
             	String line;
-            
+            gp.lb.clear();
             //outputStream.writeInt(0);
             	int cnt = 0;
             	while ((line = (String) inputStream.readObject()) != null) {
@@ -51,9 +51,7 @@ public class Client {
                 		break;
                		}
                 	if(type < 0) {
-                		g2.setFont(new Font("궁서",Font.BOLD,20));
-            			g2.drawString(line, 360, 180+cnt);
-            			cnt += 40;
+                		gp.lb.add(line);
                 	}
                 	else {
                 		String [] split=line.split(" ");
@@ -88,9 +86,7 @@ public class Client {
                 	try(BufferedWriter writer = new BufferedWriter(new FileWriter(path+"\\"+"Result.txt",false))) {
                 		for(int i=0;i<len;i++) {
                 			String message = num.get(array[i])+" "+str.get(array[i]);
-                    		g2.setFont(new Font("궁서",Font.BOLD,15));
-                			g2.drawString(message, 360, 180+cnt);
-                			cnt += 30;
+                    		gp.lb.add(message);
                 			writer.write(message);
                 			if(i!=len-1) writer.newLine();
                 		}
