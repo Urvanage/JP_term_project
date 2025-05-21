@@ -12,10 +12,10 @@ Check the master branch
 
 ## 주요 기능
 - **맵 로딩**: 텍스트 기반 맵 파일을 읽어들여 타일(이동 가능, 충돌, 안전지대, 종료지점)로 변환
-![Image](https://github.com/user-attachments/assets/72ff46c7-7fdb-45e2-9cbc-a8742cea45de)
+  ![Image](https://github.com/user-attachments/assets/72ff46c7-7fdb-45e2-9cbc-a8742cea45de)
 - **플레이어·적 이동**: `KeyHandler`로 속도 조절, `GamePanel`에서 스레드 기반 애니메이션  
 - **충돌 감지**: 벽·적·종료지점 충돌 처리 (`CollisionDetector`, `EnemyCollision`)
-![Image](https://github.com/user-attachments/assets/b5b94912-1205-46e1-a364-9f7aa21dddd5)
+  ![Image](https://github.com/user-attachments/assets/b5b94912-1205-46e1-a364-9f7aa21dddd5)
 - **리더보드**:  
   - `Server`가 `result.txt`에 점수(죽은 횟수)·유저명 저장  
   - `Client`가 서버와 소켓 연결, 로컬에 점수 불러와 정렬 및 출력  
