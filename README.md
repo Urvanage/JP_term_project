@@ -1,4 +1,87 @@
 # JP_term_project
+
+This project is a reimplementation of the classic Flash game **“The World’s Hardest Game”**, developed using **Java Swing** and **socket-based client–server communication**.
+
+The objective of the game is to navigate through obstacle-filled maps and reach the goal while avoiding enemies.  
+Upon completion, the player’s score is recorded on a leaderboard managed by a server.
+
+---
+
+# Program Activation Flow
+![Image](https://github.com/user-attachments/assets/2d470859-e5e9-40e2-9314-b910146e0acd)
+![Image](https://github.com/user-attachments/assets/88661113-207b-4a25-bda6-9c74bfb4b9d1)
+
+---
+
+# Key Features
+
+## Map Loading
+The game reads a **text-based map file** and converts it into tiles such as:
+- walkable tiles
+- collision blocks
+- safe zones
+- goal tiles
+
+![Map Loading](https://github.com/user-attachments/assets/72ff46c7-7fdb-45e2-9cbc-a8742cea45de)
+
+---
+
+## Player and Enemy Movement
+- Player movement is controlled through a **KeyHandler**
+- The **GamePanel** manages the game loop and animation using a dedicated thread
+- Enemy objects move along predefined paths to create dynamic obstacles
+
+---
+
+## Collision Detection
+Collision logic handles interactions between the player and:
+
+- map boundaries
+- enemy objects
+- the goal area
+
+Implemented using classes such as:
+- `CollisionDetector`
+- `EnemyCollision`
+
+![Collision Detection](https://github.com/user-attachments/assets/b5b94912-1205-46e1-a364-9f7aa21dddd5)
+
+---
+
+## Leaderboard System
+The game includes a **client–server leaderboard system**.
+
+- The **server** stores player results in `result.txt`
+- The **client** communicates with the server via **socket connections**
+- Scores (number of deaths) are retrieved, sorted, and displayed in the leaderboard
+
+---
+
+## Game State Management
+The game transitions between multiple states:
+
+- Title Screen
+- Gameplay
+- Leaderboard
+- End Screen
+
+State transitions are handled within the main game loop.
+
+---
+
+# Technologies Used
+
+- **Java SE**
+  - Swing / AWT for UI
+  - Thread / Runnable for the game loop
+- **Socket Networking**
+  - Client–Server communication
+- **File I/O**
+  - Reading and writing leaderboard data
+ 
+---
+
+# JP_term_project
 Check the master branch
 
 # World’s Most Difficult Block Avoidance Game
